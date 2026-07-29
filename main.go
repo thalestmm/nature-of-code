@@ -15,7 +15,7 @@ type Game struct {
 }
 
 func (g *Game) Update() error {
-	time.Sleep(time.Millisecond * 16)
+	time.Sleep(time.Millisecond * 50)
 
 	for _, entity := range g.Entities {
 		entity.Update()
@@ -38,10 +38,9 @@ func (g *Game) Layout(outsideWidth, outsideHeight int) (int, int) {
 }
 
 func main() {
-	square := ui.Square{Width: 10, Color: color.RGBA{0, 0, 0, 255}, PosX: 100.0, PosY: 100.0}
 	circle := ui.Circle{Radius: 20, Color: color.RGBA{0, 0, 0, 255}, PosX: 200.0, PosY: 200.0}
 
-	game := &Game{Entities: []ui.Entity{&square, &circle}}
+	game := &Game{Entities: []ui.Entity{&circle}}
 
 	ebiten.SetWindowSize(800, 600)
 	ebiten.SetWindowTitle("Nature of Code")

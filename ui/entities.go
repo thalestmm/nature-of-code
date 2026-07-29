@@ -2,7 +2,6 @@ package ui
 
 import (
 	"image/color"
-	"math/rand/v2"
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/vector"
@@ -20,7 +19,6 @@ type Square struct {
 	PosX  float64
 	PosY  float64
 	Opts  *ebiten.DrawImageOptions
-	image *ebiten.Image
 }
 
 func (s *Square) Image() *ebiten.Image {
@@ -63,8 +61,6 @@ func (c *Circle) Image() *ebiten.Image {
 }
 
 func (c *Circle) Update() {
-	c.PosX = 800.0 * rand.Float64()
-	c.PosY = 600.0 * rand.Float64()
 }
 
 func (c *Circle) Options() *ebiten.DrawImageOptions {
