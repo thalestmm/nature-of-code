@@ -2,6 +2,7 @@ package ui
 
 import (
 	"image/color"
+	"math/rand/v2"
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/vector"
@@ -9,6 +10,7 @@ import (
 
 type Entity interface {
 	Image() *ebiten.Image
+	Update()
 	Options() *ebiten.DrawImageOptions
 }
 
@@ -30,6 +32,9 @@ func (s *Square) Image() *ebiten.Image {
 	s.Opts = op
 
 	return square
+}
+
+func (s *Square) Update() {
 }
 
 func (s *Square) Options() *ebiten.DrawImageOptions {
@@ -55,6 +60,11 @@ func (c *Circle) Image() *ebiten.Image {
 	c.Opts = op
 
 	return circle
+}
+
+func (c *Circle) Update() {
+	c.PosX = 800.0 * rand.Float64()
+	c.PosY = 600.0 * rand.Float64()
 }
 
 func (c *Circle) Options() *ebiten.DrawImageOptions {
