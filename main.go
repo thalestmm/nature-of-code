@@ -1,38 +1,35 @@
 package main
 
 import (
-	"image/color"
+	"errors"
 	"log"
 	"time"
 
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/thalestmm/nature-of-code/ui"
+	introduction "github.com/thalestmm/nature-of-code/1_Introduction"
 )
 
-// Game implements the ebiten.Game interface
+// Game implements the ebiten.Game interface and wraps around an ebiten.Game exercise
 type Game struct {
-	Entities  []ui.Entity
 	TargetFPS uint
+	Exercise  ebiten.Game
 }
 
 func (g *Game) Update() error {
+	if g.TargetFPS <= 0 {
+		return errors.New("TargetFPS must be greater than 0")
+	}
+
 	frameDurationMilliseconds := int(1000.0 / float64(g.TargetFPS))
 	time.Sleep(time.Millisecond * time.Duration(frameDurationMilliseconds))
 
-	for _, entity := range g.Entities {
-		entity.Update()
-	}
+	g.Exercise.Update()
 
 	return nil
 }
 
 func (g *Game) Draw(screen *ebiten.Image) {
-	backgroundColor := color.RGBA{241, 143, 1, 255}
-	screen.Fill(backgroundColor)
-
-	for _, entity := range g.Entities {
-		screen.DrawImage(entity.Image(), entity.Options())
-	}
+	g.Exercise.Draw(screen)
 }
 
 func (g *Game) Layout(outsideWidth, outsideHeight int) (int, int) {
@@ -40,14 +37,14 @@ func (g *Game) Layout(outsideWidth, outsideHeight int) (int, int) {
 }
 
 func main() {
-	windowWidth := 400
-	windowHeight := 400
+	windowWidth := 1920
+	windowHeight := 1080
 
-	circle := ui.Circle{Radius: 20, Color: color.RGBA{0, 0, 0, 255}, PosX: float64(windowWidth) / 2, PosY: float64(windowHeight) / 2}
-	square1 := ui.Square{Width: 10, Color: color.RGBA{255, 255, 255, 255}, PosX: 5, PosY: 5}
-	square2 := ui.Square{Width: 10, Color: color.RGBA{255, 255, 255, 255}, PosX: 15, PosY: 15}
+	game := &Game{TargetFPS: 120}
 
-	game := &Game{Entities: []ui.Entity{&circle, &square1, &square2}, TargetFPS: 120}
+	// Example 1.1:  Traditional random walk
+	ex1 := &introduction.RandomWalk{X: float64(windowWidth) / 2, Y: float64(windowHeight) / 2, Step: 1}
+	game.Exercise = ex1
 
 	ebiten.SetWindowSize(windowWidth, windowHeight)
 	ebiten.SetWindowTitle("Nature of Code")
