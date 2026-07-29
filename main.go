@@ -3,9 +3,11 @@ package main
 import (
 	"image/color"
 	"log"
-	"math/rand"
+	"time"
 
 	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/hajimehoshi/ebiten/v2/vector"
+	"github.com/thalestmm/nature-of-code/ui"
 )
 
 // Game implements the ebiten.Game interface
@@ -13,6 +15,7 @@ type Game struct {
 }
 
 func (g *Game) Update() error {
+	time.Sleep(time.Millisecond * 16)
 	return nil
 }
 
@@ -21,16 +24,18 @@ func (g *Game) Draw(screen *ebiten.Image) {
 	screen.Fill(backgroundColor)
 
 	// Render a simple square
-	entityColor := color.RGBA{0, 0, 0, 255}
-	square := ebiten.NewImage(10, 10)
-	square.Fill(entityColor)
+	square := ui.Square{Width: 10, Color: color.RGBA{0, 0, 0, 255}, PosX: 100.0, PosY: 100.0}
+	sqImage := square.Image()
+	opSquare := square.Options()
 
-	op := &ebiten.DrawImageOptions{}
-	rx := rand.Float64()
-	ry := rand.Float64()
-	op.GeoM.Translate(rx*800.0, ry*600.0)
+	circle := ui.Circle{Radius: 20, Color: color.RGBA{0, 0, 0, 255}, PosX: 200.0, PosY: 200.0}
+	circleImage := circle.Image()
+	opCircle := circle.Options()
 
-	screen.DrawImage(square, op)
+	screen.DrawImage(sqImage, opSquare)
+	screen.DrawImage(circleImage, opCircle)
+
+	vector.FillCircle(screen, 100, 200, 20, color.RGBA{255, 255, 255, 255}, true)
 }
 
 func (g *Game) Layout(outsideWidth, outsideHeight int) (int, int) {
