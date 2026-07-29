@@ -71,11 +71,18 @@ type Emitter struct {
 	Opts    *ebiten.DrawImageOptions
 }
 
+// TODO: Implement
 func (e *Emitter) Image() *ebiten.Image {
 	emitter := ebiten.NewImage(e.Radius*2, e.Radius*2)
 
 	// Spawn n (density) particles in random directions
 	// that fade away over time up to a given distance (radius)
+	centerX := e.PosX - float64(e.Radius)
+	centerY := e.PosY - float64(e.Radius)
+
+	op := &ebiten.DrawImageOptions{}
+	op.GeoM.Translate(centerX, centerY)
+	e.Opts = op
 
 	return emitter
 }
