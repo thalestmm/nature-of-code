@@ -7,5 +7,5 @@ commit msg="update" mode="chore":
 alias p := push
 
 push msg="update" mode="chore":
-    @just commit msg="{{msg}}" mode="{{mode}}"
+    @just commit "{{msg}}" "{{mode}}"
     @git push
