@@ -15,9 +15,10 @@ type Entity interface {
 type Square struct {
 	Width int
 	Color color.Color
-	Opts  *ebiten.DrawImageOptions
 	PosX  float64
 	PosY  float64
+	Opts  *ebiten.DrawImageOptions
+	image *ebiten.Image
 }
 
 func (s *Square) Image() *ebiten.Image {
@@ -38,9 +39,9 @@ func (s *Square) Options() *ebiten.DrawImageOptions {
 type Circle struct {
 	Radius int
 	Color  color.Color
-	Opts   *ebiten.DrawImageOptions
 	PosX   float64
 	PosY   float64
+	Opts   *ebiten.DrawImageOptions
 }
 
 func (c *Circle) Image() *ebiten.Image {
@@ -58,4 +59,27 @@ func (c *Circle) Image() *ebiten.Image {
 
 func (c *Circle) Options() *ebiten.DrawImageOptions {
 	return c.Opts
+}
+
+type Emitter struct {
+	Entity  Entity
+	Color   color.Color
+	Radius  int
+	Density int
+	PosX    float64
+	PosY    float64
+	Opts    *ebiten.DrawImageOptions
+}
+
+func (e *Emitter) Image() *ebiten.Image {
+	emitter := ebiten.NewImage(e.Radius*2, e.Radius*2)
+
+	// Spawn n (density) particles in random directions
+	// that fade away over time up to a given distance (radius)
+
+	return emitter
+}
+
+func (e *Emitter) Options() *ebiten.DrawImageOptions {
+	return e.Opts
 }
