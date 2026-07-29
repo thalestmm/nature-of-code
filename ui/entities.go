@@ -2,6 +2,7 @@ package ui
 
 import (
 	"image/color"
+	"time"
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/vector"
@@ -61,6 +62,7 @@ func (c *Circle) Image() *ebiten.Image {
 }
 
 func (c *Circle) Update() {
+	c.Radius = time.Now().Nanosecond()/10000000 + 1
 }
 
 func (c *Circle) Options() *ebiten.DrawImageOptions {

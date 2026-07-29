@@ -11,11 +11,13 @@ import (
 
 // Game implements the ebiten.Game interface
 type Game struct {
-	Entities []ui.Entity
+	Entities  []ui.Entity
+	TargetFPS uint
 }
 
 func (g *Game) Update() error {
-	time.Sleep(time.Millisecond * 50)
+	frameDurationMilliseconds := int(1000.0 / float64(g.TargetFPS))
+	time.Sleep(time.Millisecond * time.Duration(frameDurationMilliseconds))
 
 	for _, entity := range g.Entities {
 		entity.Update()
@@ -38,9 +40,9 @@ func (g *Game) Layout(outsideWidth, outsideHeight int) (int, int) {
 }
 
 func main() {
-	circle := ui.Circle{Radius: 20, Color: color.RGBA{0, 0, 0, 255}, PosX: 200.0, PosY: 200.0}
+	circle := ui.Circle{Radius: 20, Color: color.RGBA{0, 0, 0, 255}, PosX: 400.0, PosY: 300.0}
 
-	game := &Game{Entities: []ui.Entity{&circle}}
+	game := &Game{Entities: []ui.Entity{&circle}, TargetFPS: 120}
 
 	ebiten.SetWindowSize(800, 600)
 	ebiten.SetWindowTitle("Nature of Code")
