@@ -34,6 +34,15 @@ func (s *Square) Image() *ebiten.Image {
 }
 
 func (s *Square) Update() {
+	screenWidth := 800
+	lineHeight := s.Width
+
+	if s.PosX >= float64(screenWidth) {
+		s.PosX = 0
+		s.PosY += float64(lineHeight)
+	} else {
+		s.PosX += 1
+	}
 }
 
 func (s *Square) Options() *ebiten.DrawImageOptions {

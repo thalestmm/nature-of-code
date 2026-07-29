@@ -41,8 +41,9 @@ func (g *Game) Layout(outsideWidth, outsideHeight int) (int, int) {
 
 func main() {
 	circle := ui.Circle{Radius: 20, Color: color.RGBA{0, 0, 0, 255}, PosX: 400.0, PosY: 300.0}
+	square := ui.Square{Width: 10, Color: color.RGBA{0, 0, 0, 255}, PosX: 0, PosY: 0}
 
-	game := &Game{Entities: []ui.Entity{&circle}, TargetFPS: 120}
+	game := &Game{Entities: []ui.Entity{&circle, &square}, TargetFPS: 120}
 
 	ebiten.SetWindowSize(800, 600)
 	ebiten.SetWindowTitle("Nature of Code")
