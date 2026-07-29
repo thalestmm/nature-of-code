@@ -40,13 +40,16 @@ func (g *Game) Layout(outsideWidth, outsideHeight int) (int, int) {
 }
 
 func main() {
-	circle := ui.Circle{Radius: 20, Color: color.RGBA{0, 0, 0, 255}, PosX: 400.0, PosY: 300.0}
+	windowWidth := 400
+	windowHeight := 400
+
+	circle := ui.Circle{Radius: 20, Color: color.RGBA{0, 0, 0, 255}, PosX: float64(windowWidth) / 2, PosY: float64(windowHeight) / 2}
 	square1 := ui.Square{Width: 10, Color: color.RGBA{255, 255, 255, 255}, PosX: 5, PosY: 5}
 	square2 := ui.Square{Width: 10, Color: color.RGBA{255, 255, 255, 255}, PosX: 15, PosY: 15}
 
 	game := &Game{Entities: []ui.Entity{&circle, &square1, &square2}, TargetFPS: 120}
 
-	ebiten.SetWindowSize(800, 600)
+	ebiten.SetWindowSize(windowWidth, windowHeight)
 	ebiten.SetWindowTitle("Nature of Code")
 
 	log.Fatal(ebiten.RunGame(game))
