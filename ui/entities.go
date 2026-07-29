@@ -41,7 +41,7 @@ func (s *Square) Update() {
 		s.PosX = 0
 		s.PosY += float64(lineHeight)
 	} else {
-		s.PosX += 1
+		s.PosX += float64(lineHeight) / 4
 	}
 }
 
