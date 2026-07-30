@@ -40,10 +40,10 @@ func main() {
 	windowWidth := 1920
 	windowHeight := 1080
 
-	game := &Game{TargetFPS: 120}
+	game := &Game{TargetFPS: 30}
 
 	// Example 1.1:  Traditional random walk
-	ex1 := &introduction.RandomWalk{X: float64(windowWidth) / 2, Y: float64(windowHeight) / 2, Step: 1}
+	ex1 := &introduction.RandomWalk{Location: introduction.Location{X: float64(windowWidth) / 2, Y: float64(windowHeight) / 2}, Step: 10}
 	game.Exercise = ex1
 
 	ebiten.SetWindowSize(windowWidth, windowHeight)
