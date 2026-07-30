@@ -42,8 +42,17 @@ func main() {
 
 	game := &Game{TargetFPS: 240}
 
-	// Example 1.1:  Traditional random walk
-	ex1 := &introduction.RandomWalk{Location: introduction.Location{X: float64(windowWidth) / 2, Y: float64(windowHeight) / 2}, Step: 10}
+	// Exexercise 1.1:  Create a random walker that has a tendency to move down and to the right.
+	ex1 := &introduction.RandomWalk{
+		Location: introduction.Location{X: float64(windowWidth) / 2, Y: float64(windowHeight) / 2},
+		Step:     10,
+		DirectionWeights: introduction.DirectionWeights{
+			Up:    1,
+			Down:  1.1,
+			Left:  1,
+			Right: 1.1,
+		},
+	}
 	game.Exercise = ex1
 
 	ebiten.SetWindowSize(windowWidth, windowHeight)

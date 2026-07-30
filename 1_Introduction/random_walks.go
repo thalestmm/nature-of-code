@@ -1,6 +1,7 @@
 package introduction
 
 import (
+	"errors"
 	"image/color"
 	"math/rand/v2"
 
@@ -13,10 +14,18 @@ type Location struct {
 	Y float64
 }
 
+type DirectionWeights struct {
+	Up    float64
+	Down  float64
+	Left  float64
+	Right float64
+}
+
 type RandomWalk struct {
-	Location Location
-	Path     []Location
-	Step     int
+	Location         Location
+	Path             []Location
+	Step             int
+	DirectionWeights DirectionWeights
 }
 
 func (rw *RandomWalk) Update() error {
@@ -24,24 +33,37 @@ func (rw *RandomWalk) Update() error {
 		rw.Step = 1
 	}
 
+	totalWeights := rw.DirectionWeights.Up + rw.DirectionWeights.Down + rw.DirectionWeights.Left + rw.DirectionWeights.Right
+
+	if totalWeights == 0 {
+		return errors.New("total weights cannot be zero")
+	}
+
 	// Append the current location to the path
 	rw.Path = append(rw.Path, rw.Location)
 
-	flip1 := rand.Float64() > 0.5
-	flip2 := rand.Float64() > 0.5
+	ySlider := rand.Float64()
+	xSlider := rand.Float64()
 
-	// Next step logic
-	if flip1 && flip2 {
+	upDownRatio := rw.DirectionWeights.Up / rw.DirectionWeights.Down
+	leftRightRatio := rw.DirectionWeights.Left / rw.DirectionWeights.Right
+
+	upCutoff := 0.5 * upDownRatio
+	leftCutoff := 0.5 * leftRightRatio
+
+	up := ySlider < upCutoff
+	left := xSlider < leftCutoff
+
+	// TODO: Add logic to take a single step per iteration
+	if up {
+		rw.Location.Y -= float64(rw.Step)
+	} else {
 		rw.Location.Y += float64(rw.Step)
 	}
-	if flip1 && !flip2 {
-		rw.Location.X += float64(rw.Step)
-	}
-	if !flip1 && flip2 {
+	if left {
 		rw.Location.X -= float64(rw.Step)
-	}
-	if !flip1 && !flip2 {
-		rw.Location.Y -= float64(rw.Step)
+	} else {
+		rw.Location.X += float64(rw.Step)
 	}
 
 	return nil
