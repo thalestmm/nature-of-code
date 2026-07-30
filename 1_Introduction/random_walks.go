@@ -24,11 +24,13 @@ func (rw *RandomWalk) Update() error {
 		rw.Step = 1
 	}
 
+	// Append the current location to the path
 	rw.Path = append(rw.Path, rw.Location)
 
 	flip1 := rand.Float64() > 0.5
 	flip2 := rand.Float64() > 0.5
 
+	// Next step logic
 	if flip1 && flip2 {
 		rw.Location.Y += float64(rw.Step)
 	}
